@@ -1,0 +1,176 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+
+
+.navbar {
+  background-color: #fbb8d2;
+}
+
+
+h3 {
+  padding-left: 1rem;
+}
+#selCountry{
+  margin-left: .5rem;
+}
+#btnRun{
+  margin-left: .5rem;
+  background-color: #f5b9d3;
+  border: 1px solid #f5b9d3;
+  font-weight: bold;
+}
+
+
+#btnReset{
+  margin-left: .5rem;
+  background-color: #f5b9d3;
+  border: 1px solid #f5b9d3;
+  font-weight: bold;
+}
+
+  /* Info container section styles*/
+
+  /* Header */
+
+.modal-title {
+  color: green;
+  text-align: center;
+  font-weight: bold;
+}
+
+.modal-body {
+
+  height: 70vh;
+
+  overflow-y: auto;
+
+  /*background-color: #fbb8d2;*/
+
+}
+
+
+/* ------------------- botones ------------------ */
+
+button {
+  padding: 0;
+  width: 32px;
+  height: 37px;
+  line-height: 0px;
+}
+
+
+
+
+  /* fichas */
+#nav-covid {
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 40px;
+}
+
+#nav-currency {
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 40px;
+}
+
+#nav-generalInfo {
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 40px;
+}
+
+#nav-home {
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+#nav-weather{
+  padding-top: 40px;
+  /*padding-left: 20px;*/
+}
+
+#nav-wikiPlaces {
+ /* padding-left: 20px;*/
+  padding-top: 20px;
+}
+
+#nav-news {
+  padding-top: 20px;
+  padding-left: 10px;
+}
+
+#txtCovidDeaths {
+  color: red;
+}
+
+.nav-link {
+  color: green;
+}
+
+.modal {
+  background-color: #fbb8d2;
+}
+
+.modal-header, .modal-body, .modal-footer {
+  background-color: #d4fece;
+}
+
+/*weather section styles*/
+#txtCapitalWeatherCurrent {
+  font-weight: bold;
+}
+
+#txtCapitalWeatherHi, #txtCapitalWeatherFHi{
+  color: red;
+}
+
+#txtCapitalWeatherLo, #txtCapitalWeatherFLo{
+  color: blue;
+}
+
+#txtCapitalWeatherForcast {
+  font-weight: bold;
+}
+
+/* Footer */
+/*
+#btnClose {
+  margin-left: .5rem;
+  background-color: #52d241;
+  border: 1px solid #52d241;
+  font-weight: bold; 
+}
+*/
+#btnClose {
+  
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 0px;
+    background-color: #d5fecf;
+    border: none;
+}
+
+.btn-close {
+  
+  
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 0px;
+    background-color: #d5fecf;
+    border: none;
+
+}
+

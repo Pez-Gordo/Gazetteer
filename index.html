@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazetteer</title>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <!--fixes favicon error in console -->
+    <link rel="shortcut icon" href="#">
+
+
+  </head>
+
+<body>  
+    <nav class="navbar navbar-light d-flex justify-content-start">   
+      
+      <select name="sel-country" id="selCountry"></select>
+      <button type="button" id="btnRun" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <img src="../img/info.png" />
+      </button>
+      <a href="./index.html">
+      <button type="button" id="btnReset" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <img src="../img/reset.png" />
+      </button>
+      </a>
+
+    </nav>
+
+    <div id="map"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><span id="txtName"></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label=""><img src="../img/off.png" /></button>
+      </div>
+      <div class="modal-body">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+            <a class="nav-link" id="nav-generalInfo-tab" data-bs-toggle="tab" href="#nav-generalInfo" role="tab" aria-controls="nav-generalInfo" aria-selected="false">General Info</a>
+    
+            <a class="nav-link" id="nav-weather-tab" data-bs-toggle="tab" href="#nav-weather" role="tab" aria-controls="nav-weather" aria-selected="false">Weather</a>
+            <a class="nav-link" id="nav-currency-tab" data-bs-toggle="tab" href="#nav-currency" role="tab" aria-controls="nav-currency" aria-selected="false">Currency</a>
+            <a class="nav-link" id="nav-covid-tab" data-bs-toggle="tab" href="#nav-covid" role="tab" aria-controls="nav-covid" aria-selected="false">Covid Info</a>       
+            <a class="nav-link" id="nav-wikiPlaces-tab" data-bs-toggle="tab" href="#nav-wikiPlaces" role="tab" aria-controls="nav-wikiPlaces" aria-selected="false">Places of Interest</a>
+            <a class="nav-link" id="nav-news-tab" data-bs-toggle="tab" href="#nav-news" role="tab" aria-controls="nav-news" aria-selected="false">News</a>
+    
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <span id="txtWikiImg"></span>
+            <br>
+            <span id="txtWiki"></span>
+            
+          </div>
+          <div class="tab-pane fade" id="nav-generalInfo" role="tabpanel" aria-labelledby="nav-generalInfo-tab">
+            <span id=txtCapital></span>
+            <span id=txtAreaInSqKm></span>
+            <span id=txtContinent></span>
+            <span id=txtPopulation></span>
+            <span id=txtLanguages></span>
+
+
+          </div>
+  
+          <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
+            <!-- <span id="txtCapital2"></span> -->
+            <span id="txtCapitalWeatherCurrent"></span>
+            <span id="txtCapitalWeatherHi"></span>
+            <span id="txtCapitalWeatherLo"></span>
+            <br>
+            <span id="txtCapitalWeatherForcast"></span>
+            <span id="txtCapitalWeatherFHi"></span>
+            <span id="txtCapitalWeatherFLo"></span>
+          </div>
+          <div class="tab-pane fade" id="nav-currency" role="tabpanel" aria-labelledby="nav-currency-tab">
+            <span id="txtCurrency"></span>
+            <span id="txtCurrencyCode"></span>
+            <span id="txtRate"></span>
+          </div>
+          <div class="tab-pane fade" id="nav-covid" role="tabpanel" aria-labelledby="nav-covid-tab">
+            <span id=txtCovidDeaths></span>
+            <span id=txtCovidCases></span>
+            <span id=txtCovidRecovered></span>
+            <span id=txtCovidCritical></span>
+            <span id=txtCovidDeathRate></span>
+          </div>
+          
+          <div class="tab-pane fade" id="nav-wikiPlaces" role="tabpanel" aria-labelledby="nav-wikiPlaces-tab">
+            <ul id="wikiPlaces"></ul>
+          </div>
+          <div class="tab-pane fade" id="nav-news" role="tabpanel" aria-labelledby="nav-news-tab">
+            <h2 id="txtHeadlineTitle">Top Headlines</h2>
+            <h6 id="noNews"></h6>
+            <ol id="newsList"></ol>
+          </div>
+  
+        </div>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal"><img src="../img/off.png" /></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div id="overlay"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="./jquery/jquery-3.5.1.min.js" type="application/javascript"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    
+    <script src="./js/main.js"></script>
+
+    
+    
+</body>
+</html>
