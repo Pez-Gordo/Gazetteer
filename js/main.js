@@ -533,10 +533,12 @@ L.easyButton('<img src="./img/track.png">', function(btn, map){
         trackISS();
     }
     else {
-        issTracker = false;
-        clearTimeout(issTimeoutID)
-        map.removeLayer(issMarker);
         
+        clearTimeout(issTimeoutID)
+        setTimeout("map.removeLayer(issMarker);", 1050)
+        
+        
+        issTracker = false;
     }
     
     
