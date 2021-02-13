@@ -9,6 +9,20 @@ let iso2CountryCode;
 let capitalCity;
 let visitedCountries = [];
 let popup;
+let issTracker = false;
+let quakesMapper = false;
+
+var tracker = true;
+
+var issIcon = L.icon({
+    iconUrl: './img/iss.png',
+    iconSize: [60, 60],
+    iconAnchor: [30, 30],
+    popupAnchor: [-3, 16]
+});
+
+var issTimeoutID;
+var issMarker;
 
 let flagArray = true;
 
@@ -126,63 +140,36 @@ $('#selCountry').on('change', function() {
     dataType: 'json',
     success: function(result) {
 
-      console.log('all borders result', result);
+        console.log('all borders result', result);
 
-      if (map.hasLayer(border)) {
-        map.removeLayer(border);
-      }
-          //console.log(result.data.border.features)
-          let countryArray = [];
-          let countryOptionTextArray = [];
+        if (map.hasLayer(border)) {
+            map.removeLayer(border);
+        }
           
-          //let fullCountryArray = [];
-
-          // populates fullCountryArray with info and colour every other coutry with available info in red
-          /*
-          for (let i = 0; i < result.data.border.features.length; i++) {
-            fullCountryArray.push(result.data.border.features[i])
-          }
-          
-          if (flagArray){
-            for (let i = 0; i < fullCountryArray.length; i++) {
-                //switch ()
-              L.geoJSON(fullCountryArray[i], {
-                color: '#ff2176',
-                //color: '112176',
-                weight: 2,
-                opacity: 0.25
-              }).addTo(map);
-
+        let countryArray = [];
+        let countryOptionTextArray = [];
+    
+        for (let i = 0; i < result.data.border.features.length; i++) {
+            if (result.data.border.features[i].properties.iso_a3 === countryCode) {
+                countryArray.push(result.data.border.features[i]);
             }
-            flagArray = false;
-          }
-          */
-
-          
-
-          for (let i = 0; i < result.data.border.features.length; i++) {
-               if (result.data.border.features[i].properties.iso_a3 === countryCode) {
-                  countryArray.push(result.data.border.features[i]);
-              }
-          };
-          for (let i = 0; i < result.data.border.features.length; i++) {
-              if (result.data.border.features[i].properties.name === countryOptionText) {
-                 countryOptionTextArray.push(result.data.border.features[i]);
-             }
-          };
-          //console.log('country array', countryArray);
-          //console.log('Odd Array', countryOptionTextArray)
-          border = L.geoJSON(countryOptionTextArray[0], {
-                                                          color: 'lime',
-                                                          weight: 3,
-                                                          opacity: 0.75
+        };
+        for (let i = 0; i < result.data.border.features.length; i++) {
+            if (result.data.border.features[i].properties.name === countryOptionText) {
+                countryOptionTextArray.push(result.data.border.features[i]);
+            }
+        };
+     
+        border = L.geoJSON(countryOptionTextArray[0], {
+                                                        color: 'lime',
+                                                        weight: 3,
+                                                        opacity: 0.75
                                                         }).addTo(map);
-          let bounds = border.getBounds();
-                  map.flyToBounds(bounds, {
-                  padding: [35, 35], 
-                  duration: 2,
-                  //maxZoom: 6
-              });
+        let bounds = border.getBounds();
+            map.flyToBounds(bounds, {
+            padding: [35, 35], 
+            duration: 2,
+            });
             
               
     },
@@ -440,25 +427,124 @@ map.on('click', function(e) {
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
     }
-});        
+  });        
+
 });
 
-// Adding buttons
+    // Adding buttons
 
-// Adding new earthquake API info. When clicking this button it'll trigger event
+L.easyButton('<img src="./img/eq.png">', function(btn, map){
+        //helloPopup.setLatLng(map.getCenter()).openOn(map);
+    map.setZoom(3);
 
-var helloPopup = L.popup().setContent('Hello World!');
+    $.ajax({
+    	url: "./php/getEarthquakeData.php",
+    	type: 'GET',
+    	dataType: "json",
 
-L.easyButton('<img src="../img/eq.png">', function(btn, map){
-    helloPopup.setLatLng(map.getCenter()).openOn(map);
+    
+    	success: function(result) {
+            console.log('populate options' , result.earthquakeData.features[0]);
+            for (var i = 0; i < result.earthquakeData.features.length; i++) {
+                var quakePos = result.earthquakeData.features[i].geometry.coordinates;
+
+                var mag = result.earthquakeData.features[i].properties.mag * 32 * 50;
+
+                L.circle([quakePos[1], quakePos[0]], {
+                    color: 'red',
+                    fillColor: 'white',
+                    fillOpacity: 0.8,
+                    radius: mag,
+                    stroke: true,
+                    weight: 5, 
+                }).addTo(map).bindPopup('Magnitude -> ' + result.earthquakeData.features[i].properties.mag + ' points.<br>' +
+                                        'Place -> ' + result.earthquakeData.features[i].properties.place + '<br>' +
+                                        'Type -> ' + result.earthquakeData.features[i].properties.type + '<br>' +
+                                        'Time -> ' + result.earthquakeData.features[i].properties.time);        
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+
+    });
+    
+   
 }).addTo(map);
+
+// keyboard control to toggle focus view on/off
+
+$(window).keypress(function (e) {
+    //use e.which to know what key was pressed
+    var keyCode = e.which;
+    //console.log(e, keyCode, e.which)
+    if (keyCode == 116) {
+        if (tracker === false) {
+            tracker = true;
+        }
+        else {
+            tracker = false;
+        }
+        //console.log("You pressed T!");
+        //alert("You pressed W!");
+    }
+})
+
+// Adding button to track iss 
+
+L.easyButton('<img src="./img/track.png">', function(btn, map){
+    
+    if (!issTracker){
+        alert('Press "T" to start/stop following the ISS')
+        issTracker = true;
+
+        map.setZoom(5.5);
+
+        function trackISS () {
+            $.ajax({
+                url: "./php/issTracker.php",
+                type: 'GET',
+                dataType: 'json',
+                success: function(result){
+                    //console.log(result.data.info.iss_position.latitude);
+                    if(result){
+                        updateISSMarker(result.data.info.iss_position.latitude, 
+                            result.data.info.iss_position.longitude);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert(`Error in ISS pos: ${textStatus} ${errorThrown} ${jqXHR}`);
+                }
+            });
+             issTimeoutID = setTimeout(trackISS, 1000); 
+        }
+
+        // ISS marker and circle update function
+        function updateISSMarker(lat, lon) {
+            if(issMarker != undefined) { 
+                map.removeLayer(issMarker);
+            }
+
+            issMarker = new L.marker([lat, lon], {icon: issIcon}).addTo(map);
+            if (tracker) {
+                map.setView([lat, lon]);
+            }
+        }
+        trackISS();
+    }
+    else {
+        issTracker = false;
+        clearTimeout(issTimeoutID)
+        map.removeLayer(issMarker);
+        
+    }
+    
+    
+}).addTo(map)
 
 // Adding button for visited countries list
 
-
-
-
-L.easyButton('<img src="../img/lista.png">', function(btn, map){
+L.easyButton('<img src="./img/lista.png">', function(btn, map){
     
 
     popup = 'Visited Countries: <br><br>';
@@ -484,7 +570,7 @@ L.control.scale({
 L.Control.Watermark = L.Control.extend({
     onAdd: function(map){
         var img = L.DomUtil.create('img')
-        img.src = '../img/itcslogo.png'
+        img.src = './img/itcslogo.png'
         img.style.width = '120px'
         return img
     },
