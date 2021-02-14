@@ -101,7 +101,6 @@ const successCallback = (position) => {
           
           let currentCountry = result.data[0].components["ISO_3166-1_alpha-3"];
           $("#selCountry").val(currentCountry).change();
-          
       
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -169,9 +168,7 @@ $('#selCountry').on('change', function() {
             map.flyToBounds(bounds, {
             padding: [35, 35], 
             duration: 2,
-            });
-            
-              
+            });                          
     },
     error: function(jqXHR, textStatus, errorThrown) {
       // your error code
@@ -278,17 +275,14 @@ $('#btnRun').click(function() {
                   },
                   success: function(result) {
                       console.log('Covid Data',result.covidData);
-                      
-                      
+                                            
                       if (result.status.name == "ok") {
                           $('#txtCovidDeaths').html('Deaths: ' + result.covidData.deaths + '<br>');
                           $('#txtCovidCases').html('Total Registered Cases: ' + result.covidData.confirmed + '<br>');
                           $('#txtCovidRecovered').html('Recoveries: ' + result.covidData.recovered + '<br>');
                           $('#txtCovidCritical').html('Current Critical Patients: ' + result.covidData.critical + '<br>');
                           $('#txtCovidDeathRate').html('<strong>Death rate: ' + result.covidData.calculated.death_rate.toFixed(1) + ' %</strong><br>');
-
-
-                          
+                         
                       }
                   
                   },
@@ -446,9 +440,10 @@ L.easyButton('<img src="./img/eq.png">', function(btn, map){
     	success: function(result) {
             console.log('populate options' , result.earthquakeData.features[0]);
             for (var i = 0; i < result.earthquakeData.features.length; i++) {
-                var quakePos = result.earthquakeData.features[i].geometry.coordinates;
 
+                var quakePos = result.earthquakeData.features[i].geometry.coordinates;
                 var mag = result.earthquakeData.features[i].properties.mag * 32 * 50;
+                var locDate = new Date(result.earthquakeData.features[i].properties.time).toISOString().slice(0, 19).replace("T", " / ")
 
                 L.circle([quakePos[1], quakePos[0]], {
                     color: 'red',
@@ -460,7 +455,8 @@ L.easyButton('<img src="./img/eq.png">', function(btn, map){
                 }).addTo(map).bindPopup('Magnitude -> ' + result.earthquakeData.features[i].properties.mag + ' points.<br>' +
                                         'Place -> ' + result.earthquakeData.features[i].properties.place + '<br>' +
                                         'Type -> ' + result.earthquakeData.features[i].properties.type + '<br>' +
-                                        'Time -> ' + result.earthquakeData.features[i].properties.time);        
+                                        'Unix Time -> ' + result.earthquakeData.features[i].properties.time + '<br>' +
+                                        'Local Date / Time -> ' + locDate);        
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -495,7 +491,7 @@ $(window).keypress(function (e) {
 L.easyButton('<img src="./img/track.png">', function(btn, map){
     
     if (!issTracker){
-        alert('Press "T" to start/stop following the ISS')
+        alert('Press "T" to toggle on/off focus on ISS')
         issTracker = true;
 
         map.setZoom(5.5);

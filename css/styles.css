@@ -7,13 +7,14 @@ body {
     margin: 0;
 }
 html, body, #map {
-    height: 100%;
+    height: 97.1%;
     width: 100vw;
 }
 
 
 .navbar {
   background-color: #fbb8d2;
+  position: sticky;
 }
 
 
