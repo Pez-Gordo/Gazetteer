@@ -26,20 +26,24 @@ var issMarker;
 
 let flagArray = true;
 
-// asignamos el div con el id="map" a la propiedad map del objeto "L". L viene de "Leaflet"
-var map = L.map('map').fitWorld();
+
 // Markers cluster for a better handling
 //var myMarkers = new L.featureGroup().addTo(map);
 var customIconRed = new L.Icon({
-  iconUrl: '../gazetteer/img/marker.png',
+  iconUrl: './img/marker.png',
   iconSize: [50, 50],
   iconAnchor: [25, 50]
 });
 var customIconOrange = new L.Icon({
-  iconUrl: '../gazetteer/img/marker_orange.png',
+  iconUrl: './img/marker_orange.png',
   iconSize: [50, 50],
   iconAnchor: [25, 50]
 });
+
+
+/*
+// asignamos el div con el id="map" a la propiedad map del objeto "L". L viene de "Leaflet"
+var map = L.map('map').fitWorld();
 
 // asignamos mapbox como nuestra gradilla 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -50,10 +54,42 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoicGV6IiwiYSI6ImNraWFlcDVsYTBpMW0ycnJreWRxdnNneXIifQ._2kq-bt8gs8Wmc5JIY-6NQ'
 }).addTo(map);
+*/
+
+var mapboxUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}'
+var mapboxAttribution = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+var token = 'pk.eyJ1IjoicGV6IiwiYSI6ImNraWFlcDVsYTBpMW0ycnJreWRxdnNneXIifQ._2kq-bt8gs8Wmc5JIY-6NQ'
+
+var dark = L.tileLayer(mapboxUrl, {id: 'mapbox/dark-v10', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution, accessToken: token}),
+    streets   = L.tileLayer(mapboxUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution, accessToken: token});
+    outdoors   = L.tileLayer(mapboxUrl, {id: 'mapbox/outdoors-v11', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution, accessToken: token});
+    light   = L.tileLayer(mapboxUrl, {id: 'mapbox/light-v10', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution, accessToken: token});
+    satellite   = L.tileLayer(mapboxUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution, accessToken: token});
+    satStreets   = L.tileLayer(mapboxUrl, {id: 'mapbox/satellite-streets-v11', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution, accessToken: token});
+
+var baseMaps = {
+    "Streets": streets,
+    "Dark": dark,
+    "Outdoors": outdoors,
+    "Light": light,
+    "Satellite": satellite,
+    "Stellite-Streets": satStreets
+};
+
+var map = L.map('map', {
+    
+    zoom: 10,
+    layers: [streets]
+}).fitWorld();
+
+L.control.layers(baseMaps).addTo(map);
+
+
+
 
 // A more programatically way to build the countries <select> list
 $.ajax({
-	url: "../gazetteer/php/geoJson.php",
+	url: "./php/geoJson.php",
 	type: 'POST',
 	dataType: "json",
 	
@@ -71,13 +107,16 @@ $.ajax({
             $("#selCountry").html($("#selCountry option").sort(function (a, b) {
                 return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
             }))
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
         }
       });
 
 // Locating user's device and getting info from openCage API
 const successCallback = (position) => {
   $.ajax({
-      url: "../gazetteer/php/openCage.php",
+      url: "./php/openCage.php",
       type: 'GET',
       dataType: 'json',
       data: {
@@ -134,7 +173,7 @@ $('#selCountry').on('change', function() {
   showFirstTab();
 
   $.ajax({
-    url: "../gazetteer/php/geoJson.php",
+    url: "./php/geoJson.php",
     type: 'POST',
     dataType: 'json',
     success: function(result) {
@@ -180,7 +219,7 @@ $('#selCountry').on('change', function() {
 // fetching info from rest countries API
 $('#btnRun').click(function() {
   $.ajax({
-      url: "../gazetteer/php/restCountries.php",
+      url: "./php/restCountries.php",
       type: 'POST',
       dataType: 'json',
       data: {
@@ -217,7 +256,7 @@ $('#btnRun').click(function() {
               });
       //Geonames Country Info
               $.ajax({
-                  url: "../gazetteer/php/getCountryInfo.php",
+                  url: "./php/getCountryInfo.php",
                   type: 'GET',
                   dataType: 'json',
                   data: {
@@ -241,7 +280,7 @@ $('#btnRun').click(function() {
       
               //News API
               $.ajax({
-                  url: "../gazetteer/php/news.php",
+                  url: "./php/news.php",
                   type: 'GET',
                   dataType: 'json',
                   data: {
@@ -267,7 +306,7 @@ $('#btnRun').click(function() {
 
               //Covid info
               $.ajax({
-                  url: "../gazetteer/php/covid.php",
+                  url: "./php/covid.php",
                   type: 'GET',
                   dataType: 'json',
                   data: {
@@ -293,7 +332,7 @@ $('#btnRun').click(function() {
 
               // Exchange Rates
               $.ajax({
-                  url: "../gazetteer/php/exchangeRates.php",
+                  url: "./php/exchangeRates.php",
                   type: 'GET',
                   dataType: 'json',
                   success: function(result) {
@@ -310,7 +349,7 @@ $('#btnRun').click(function() {
               });  
               //openWeather API          
               $.ajax({
-                  url: "../gazetteer/php/openWeatherCurrent.php",
+                  url: "./php/openWeatherCurrent.php",
                   type: 'POST',
                   dataType: 'json',
                   data: {
@@ -329,7 +368,7 @@ $('#btnRun').click(function() {
                           
                           //forcast API
                           $.ajax({
-                              url: "../gazetteer/php/openWeatherForcast.php",
+                              url: "./php/openWeatherForcast.php",
                               type: 'GET',
                               dataType: 'json',
                               data: {
@@ -354,7 +393,7 @@ $('#btnRun').click(function() {
                           
                           // wiki places of interest
                           $.ajax({
-                              url: "../gazetteer/php/wikiPlaces.php",
+                              url: "./php/wikiPlaces.php",
                               type: 'GET',
                               dataType: 'json',
                               data: {
@@ -395,7 +434,7 @@ map.on('click', function(e) {
   var popLocation= e.latlng;
   //console.log('<<---popLocation--->>', popLocation.lat)
   $.ajax({
-    url: "../gazetteer/php/openCage.php",
+    url: "./php/openCage.php",
     type: 'GET',
     dataType: 'json',
     data: {
@@ -531,20 +570,17 @@ L.easyButton('<img src="./img/track.png">', function(btn, map){
     else {
         
         clearTimeout(issTimeoutID)
+        //to avoid the iss icon printed on the map after disabling tracker
         setTimeout("map.removeLayer(issMarker);", 1050)
-        
-        
+                
         issTracker = false;
-    }
-    
-    
+    }        
 }).addTo(map)
 
 // Adding button for visited countries list
 
 L.easyButton('<img src="./img/lista.png">', function(btn, map){
     
-
     popup = 'Visited Countries: <br><br>';
 
     for (var i = 0; i < visitedCountries.length; i++) {
@@ -579,4 +615,4 @@ L.control.watermark = function(opts){
     return new L.Control.Watermark(opts)
 }
 
-L.control.watermark({position: 'topright'}).addTo(map)
+L.control.watermark({position: 'bottomleft'}).addTo(map)
