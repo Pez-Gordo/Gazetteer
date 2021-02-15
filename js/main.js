@@ -532,7 +532,7 @@ L.easyButton('<img src="./img/track.png">', function(btn, map){
     if (!issTracker){
         alert('Press "T" to toggle on/off focus on ISS')
         issTracker = true;
-        //tracker = true;
+        tracker = true;
         map.setZoom(5.5);
 
         function trackISS () {
