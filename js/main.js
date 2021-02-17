@@ -129,14 +129,14 @@ const successCallback = (position) => {
           console.log('openCage PHP',result);
           currentLat = result.data[0].geometry.lat;
           currentLng = result.data[0].geometry.lng;
-
+            /*
           L.marker([currentLat, currentLng], {icon: customIconRed}).addTo(map).bindPopup("You are in: <br><br><br>" + result.data[0].components.postcode + "<br><br>" +
                                                                                               result.data[0].components.suburb + " suburb <br><br>" +
                                                                                               result.data[0].components.town + " town <br><br>" +
                                                                                               result.data[0].components.state + " state <br><br>" +
                                                                                               result.data[0].components.country + " <br><br>" 
                                                                                         );
-
+            */
           $("selectOpt select").val(result.data[0].components["ISO_3166-1_alpha-3"]);
           
           let currentCountry = result.data[0].components["ISO_3166-1_alpha-3"];
@@ -449,7 +449,7 @@ map.on('click', function(e) {
         currentLng = result.data[0].geometry.lng;
 
         
-        L.marker([currentLat, currentLng], {icon: customIconOrange}).addTo(map).bindPopup("You clicked in: " + result.data[0].components.country);
+       // L.marker([currentLat, currentLng], {icon: customIconOrange}).addTo(map).bindPopup("You clicked in: " + result.data[0].components.country);
 
         $("selectOpt select").val(result.data[0].components["ISO_3166-1_alpha-3"]);
         
