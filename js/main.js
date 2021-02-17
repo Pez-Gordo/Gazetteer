@@ -10,7 +10,8 @@ let capitalCity;
 let visitedCountries = [];
 let popup;
 let issTracker = false;
-let quakesMapper = false;
+let quakeMapper = false;
+
 
 var tracker = true;
 
@@ -84,7 +85,7 @@ var map = L.map('map', {
 
 L.control.layers(baseMaps).addTo(map);
 
-
+var myCircles = new L.featureGroup().addTo(map);
 
 
 // A more programatically way to build the countries <select> list
@@ -467,42 +468,53 @@ map.on('click', function(e) {
     // Adding buttons
 
 L.easyButton('<img src="./img/eq.png">', function(btn, map){
-        //helloPopup.setLatLng(map.getCenter()).openOn(map);
-    map.setZoom(3);
-
-    $.ajax({
-    	url: "./php/getEarthquakeData.php",
-    	type: 'GET',
-    	dataType: "json",
-
     
-    	success: function(result) {
-            console.log('populate options' , result.earthquakeData.features[0]);
-            for (var i = 0; i < result.earthquakeData.features.length; i++) {
+    if (!quakeMapper) {
 
-                var quakePos = result.earthquakeData.features[i].geometry.coordinates;
-                var mag = result.earthquakeData.features[i].properties.mag * 32 * 50;
-                var locDate = new Date(result.earthquakeData.features[i].properties.time).toISOString().slice(0, 19).replace("T", " / ")
+        map.setZoom(3);
 
-                L.circle([quakePos[1], quakePos[0]], {
-                    color: 'red',
-                    fillColor: 'white',
-                    fillOpacity: 0.8,
-                    radius: mag,
-                    stroke: true,
-                    weight: 5, 
-                }).addTo(map).bindPopup('Magnitude -> ' + result.earthquakeData.features[i].properties.mag + ' points.<br>' +
-                                        'Place -> ' + result.earthquakeData.features[i].properties.place + '<br>' +
-                                        'Type -> ' + result.earthquakeData.features[i].properties.type + '<br>' +
-                                        'Unix Time -> ' + result.earthquakeData.features[i].properties.time + '<br>' +
-                                        'Local Date / Time -> ' + locDate);        
+        $.ajax({
+        	url: "./php/getEarthquakeData.php",
+        	type: 'GET',
+        	dataType: "json",
+
+        
+        	success: function(result) {
+                console.log('populate options' , result.earthquakeData.features[0]);
+                for (var i = 0; i < result.earthquakeData.features.length; i++) {
+
+                    var quakePos = result.earthquakeData.features[i].geometry.coordinates;
+                    var mag = result.earthquakeData.features[i].properties.mag * 32 * 50;
+                    var locDate = new Date(result.earthquakeData.features[i].properties.time).toISOString().slice(0, 19).replace("T", " / ")
+
+                    L.circle([quakePos[1], quakePos[0]], {
+                        color: 'red',
+                        fillColor: 'white',
+                        fillOpacity: 0.8,
+                        radius: mag,
+                        stroke: true,
+                        weight: 5, 
+                    }).addTo(myCircles).bindPopup('Magnitude -> ' + result.earthquakeData.features[i].properties.mag + ' points.<br>' +
+                                            'Place -> ' + result.earthquakeData.features[i].properties.place + '<br>' +
+                                            'Type -> ' + result.earthquakeData.features[i].properties.type + '<br>' +
+                                            'Unix Time -> ' + result.earthquakeData.features[i].properties.time + '<br>' +
+                                            'Local Date / Time -> ' + locDate);        
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
+        
+        });
+        quakeMapper = true
+    } else {
+        myCircles.eachLayer(function (layer) {
 
-    });
+            myCircles.removeLayer(layer);
+        
+        });
+        quakeMapper = false
+    }
     
    
 }).addTo(map);
