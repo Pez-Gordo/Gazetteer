@@ -175,3 +175,9 @@ button {
 
 }
 
+#issInfoBanner {
+  visibility: hidden;
+  font-weight: bold;
+  margin-left: 50px;
+  text-align: center;
+}

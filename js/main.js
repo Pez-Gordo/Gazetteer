@@ -542,10 +542,12 @@ $(window).keypress(function (e) {
 L.easyButton('<img src="./img/track.png">', function(btn, map){
     
     if (!issTracker){
-        alert('Press "T" to toggle on/off focus on ISS')
+        //alert('Press "T" to toggle on/off focus on ISS')
         issTracker = true;
         tracker = true;
         map.setZoom(5.5);
+
+        document.getElementById('issInfoBanner').style.visibility = "visible";
 
         function trackISS () {
             $.ajax({
@@ -584,7 +586,7 @@ L.easyButton('<img src="./img/track.png">', function(btn, map){
         clearTimeout(issTimeoutID)
         //to avoid the iss icon printed on the map after disabling tracker
         setTimeout("map.removeLayer(issMarker);", 1050)
-                
+        document.getElementById('issInfoBanner').style.visibility = "hidden";
         issTracker = false;
     }        
 }).addTo(map)
