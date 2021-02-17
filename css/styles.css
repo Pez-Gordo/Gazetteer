@@ -7,13 +7,13 @@ body {
     margin: 0;
 }
 html, body, #map {
-    height: 97.1%;
+    height: 100vw;
     width: 100vw;
 }
 
 
 .navbar {
-  background-color: #fbb8d2;
+  background-color: #d5fecf;
   position: sticky;
 }
 
@@ -26,16 +26,16 @@ h3 {
 }
 #btnRun{
   margin-left: .5rem;
-  background-color: #f5b9d3;
-  border: 1px solid #f5b9d3;
+  background-color: #d5fecf;
+  border: 1px solid #d5fecf;
   font-weight: bold;
 }
 
 
 #btnReset{
   margin-left: .5rem;
-  background-color: #f5b9d3;
-  border: 1px solid #f5b9d3;
+  background-color: #d5fecf;
+  border: 1px solid #d5fecf;
   font-weight: bold;
 }
 
@@ -55,7 +55,7 @@ h3 {
 
   overflow-y: auto;
 
-  /*background-color: #fbb8d2;*/
+  /*background-color: #d5fecf;*/
 
 }
 
@@ -120,7 +120,7 @@ button {
 }
 
 .modal {
-  background-color: #fbb8d2;
+  background-color: transparent;
 }
 
 .modal-header, .modal-body, .modal-footer {
