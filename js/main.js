@@ -462,6 +462,18 @@ map.on('click', function(e) {
         else {
             console.log("clicked on water")
             console.log('openCage PHP',result);
+
+            currentLat = result.data[0].geometry.lat;
+            currentLng = result.data[0].geometry.lng;
+
+             L.popup()
+                .setLatLng([currentLat, currentLng])
+                .setContent("<div>" + result.data[0].formatted + "</div>")
+                .openOn(map);
+
+            
+
+
         }
             
         
