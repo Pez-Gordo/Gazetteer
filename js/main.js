@@ -432,7 +432,7 @@ $('#btnRun').click(function() {
 
 // New event for map click
 map.on('click', function(e) {        
-  var popLocation= e.latlng;
+  var popLocation = e.latlng;
   //console.log('<<---popLocation--->>', popLocation.lat)
   $.ajax({
     url: "./php/openCage.php",
@@ -444,22 +444,34 @@ map.on('click', function(e) {
     },
 
     success: function(result) {
-        console.log('openCage PHP',result);
-        currentLat = result.data[0].geometry.lat;
-        currentLng = result.data[0].geometry.lng;
 
-        
-       // L.marker([currentLat, currentLng], {icon: customIconOrange}).addTo(map).bindPopup("You clicked in: " + result.data[0].components.country);
+        if (result.data[0].components["ISO_3166-1_alpha-3"]) {
+            console.log('openCage PHP',result);
+            //console.log(typeof result);
+            currentLat = result.data[0].geometry.lat;
+            currentLng = result.data[0].geometry.lng;
 
-        $("selectOpt select").val(result.data[0].components["ISO_3166-1_alpha-3"]);
+            
+            // L.marker([currentLat, currentLng], {icon: customIconOrange}).addTo(map).bindPopup("You clicked in: " + result.data[0].components.country);
+
+            $("selectOpt select").val(result.data[0].components["ISO_3166-1_alpha-3"]);
+            
+            let currentCountry = result.data[0].components["ISO_3166-1_alpha-3"];
+            $("#selCountry").val(currentCountry).change();
+        }
+        else {
+            console.log("clicked on water")
+            console.log('openCage PHP',result);
+        }
+            
         
-        let currentCountry = result.data[0].components["ISO_3166-1_alpha-3"];
-        $("#selCountry").val(currentCountry).change();
         
     
     },
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
+        console.log(jqXHR, errorThrown)
+       
     }
   });        
 
