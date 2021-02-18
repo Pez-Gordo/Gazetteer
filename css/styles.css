@@ -12,6 +12,7 @@ html, body, #map {
 }
 
 
+
 .navbar {
   background-color: #d5fecf;
   position: sticky;
@@ -198,15 +199,28 @@ button {
     100%{   color: #000;    }
 }
 
-/*
-.blinking{
-    animation:blinkingText 1.2s infinite;
+.menuContent {
+  margin: 0px auto;
 }
-@keyframes blinkingText{
-    0%{     color: #000;    }
-    49%{    color: #000; }
-    60%{    color: transparent; }
-    99%{    color:transparent;  }
-    100%{   color: #000;    }
-}
-*/
+
+
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background:#d6fed0;
+  color:#000000;
+  font-size:14px;
+  line-height:24px;
+  border-radius: 6px;
+  }
+.custom-popup .leaflet-popup-content-wrapper a {
+    color:rgba(255,255,255,0.1);
+  }
+.custom-popup .leaflet-popup-tip-container {
+  width:30px;
+  height:15px;
+  }
+
+.custom-popup .leaflet-popup-tip {
+    background: #d6fed0;
+  
+  }

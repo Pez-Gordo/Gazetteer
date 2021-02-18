@@ -26,17 +26,15 @@
             <img src="./img/reset.png" />
           </button>
           </a>
-
-          <p id="issInfoBanner">"T" = Toggle view on/off ISS</p>
-
           <button type="button" id="btnHelp" data-bs-toggle="modal" data-bs-target="#exampleModal2">
             <img src="./img/help.png" />
           </button>
-        
+          <p id="issInfoBanner">"T" = Toggle view on/off ISS</p>
+
         </nav>
     </div>
 
-    <div id="map"></div>
+    <div class='custom-popup' id="map"></div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -117,9 +115,9 @@
   </div>
 </div>
 
+
 <!-- Modal 2 -->
 
-<!-- Modal -->
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
@@ -130,6 +128,16 @@
       
       <div class="modal-body">
         
+        <div class="menuContent">
+
+          <p><img src="./img/help.png"> Display this help menu</p>
+          <p><img src="./img/info.png"> Get information about selected country</p>
+          <p><img src="./img/eq.png"> Map last week's earthquakes</p>
+          <p><img src="./img/track.png"> Track the International Spacial Station</p>
+          <p><img src="./img/lista.png"> Display a list of visited countries</p>
+          <p><img src="./img/reset.png"> Reset app to initial state</p>
+
+        </div>
         
       </div>
 

@@ -466,19 +466,14 @@ map.on('click', function(e) {
             currentLat = result.data[0].geometry.lat;
             currentLng = result.data[0].geometry.lng;
 
-             L.popup()
+            
+
+            L.popup()
                 .setLatLng([currentLat, currentLng])
-                .setContent("<div>" + result.data[0].formatted + "</div>")
+                .setContent("<div><strong>" + result.data[0].formatted + "</strong></div>")
                 .openOn(map);
-
-            
-
-
         }
-            
-        
-        
-    
+     
     },
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
@@ -518,11 +513,11 @@ L.easyButton('<img src="./img/eq.png">', function(btn, map){
                         radius: mag,
                         stroke: true,
                         weight: 5, 
-                    }).addTo(myCircles).bindPopup('Magnitude -> ' + result.earthquakeData.features[i].properties.mag + ' points.<br>' +
-                                            'Place -> ' + result.earthquakeData.features[i].properties.place + '<br>' +
-                                            'Type -> ' + result.earthquakeData.features[i].properties.type + '<br>' +
-                                            'Unix Time -> ' + result.earthquakeData.features[i].properties.time + '<br>' +
-                                            'Local Date / Time -> ' + locDate);        
+                    }).addTo(myCircles).bindPopup('<strong>Magnitude: </strong>' + result.earthquakeData.features[i].properties.mag + ' <strong>points.</strong><br>' +
+                                            '<strong>Place: </strong>' + result.earthquakeData.features[i].properties.place + '<br>' +
+                                            '<strong>Type: </strong>' + result.earthquakeData.features[i].properties.type + '<br>' +
+                                            '<strong>Unix Time: </strong>' + result.earthquakeData.features[i].properties.time + '<br>' +
+                                            '<strong>Local Date / Time: </strong>' + locDate);        
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -619,7 +614,7 @@ L.easyButton('<img src="./img/track.png">', function(btn, map){
 
 L.easyButton('<img src="./img/lista.png">', function(btn, map){
     
-    popup = 'Visited Countries: <br><br>';
+    popup = '<strong>Visited Countries: </strong><br><br>';
 
     for (var i = 0; i < visitedCountries.length; i++) {
         popup = popup + visitedCountries[i] + '<br>';
