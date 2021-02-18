@@ -121,8 +121,21 @@ button {
 }
 
 #txtCovidDeaths {
-  color: red;
+  font-weight: bold;
+  animation:blinkingTextRed 0.9s infinite;
 }
+
+#txtCovidDeathRate {
+  animation:blinkingTextRed 0.9s infinite;
+}
+
+#txtHeadlineTitle {
+  font-weight: bold;
+  color: green;
+  text-align: center;
+}
+
+
 
 .nav-link {
   color: green;
@@ -136,10 +149,53 @@ button {
   background-color: #d4fece;
 }
 
-/*weather section styles*/
-#txtCapitalWeatherCurrent {
-  font-weight: bold;
+.modal-body a {
+  color: green;
 }
+
+.modal-body a:hover {
+  color: black;
+}
+
+/* News Style */
+
+#nav-news {
+  padding-left: 15px;
+}
+
+/* Wikiplaces Style */
+
+#wikiPlaces {
+  padding-left: 15px;
+}
+
+/* Covid styles */
+
+#txtCovidCases, #txtCovidRecovered, #txtCovidCritical {
+  color: green;
+}
+
+/* General Info Style */
+
+#nav-generalInfo {
+  color: green;
+}
+
+/* Currency Style */
+
+#nav-currency {
+  color: green;
+}
+
+
+/*weather section styles*/
+
+#txtCapitalWeatherCurrent, #txtCapitalWeatherForcast {
+  font-weight: bold;
+  color: green;
+}
+
+
 
 #txtCapitalWeatherHi, #txtCapitalWeatherFHi{
   color: red;
@@ -149,9 +205,7 @@ button {
   color: blue;
 }
 
-#txtCapitalWeatherForcast {
-  font-weight: bold;
-}
+
 
 /* Footer */
 /*
@@ -195,12 +249,23 @@ button {
     0%{     color: #000;    }
     49%{    color: #000; }
     60%{    color: transparent; }
-    99%{    color:transparent;  }
+    99%{    color: transparent;  }
     100%{   color: #000;    }
+}
+@keyframes blinkingTextRed{
+  0%{     color: #ff0000;    }
+  49%{    color: #ff0000; }
+  60%{    color: transparent; }
+  99%{    color: transparent;  }
+  100%{   color: #ff0000;    }
 }
 
 .menuContent {
-  margin: 0px auto;
+  padding-left: 50px;
+}
+
+#txtWikiImg {
+  padding-left: 30px;
 }
 
 
@@ -224,3 +289,7 @@ button {
     background: #d6fed0;
   
   }
+
+#exampleModal2 {
+  height: 450px;
+}
