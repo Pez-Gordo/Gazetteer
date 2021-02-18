@@ -31,6 +31,14 @@ h3 {
   font-weight: bold;
 }
 
+#btnHelp {
+  margin-left: .5rem;
+  background-color: #d5fecf;
+  border: none;
+  font-weight: bold;
+
+}
+
 
 #btnReset{
   margin-left: .5rem;
