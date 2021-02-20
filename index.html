@@ -14,18 +14,14 @@
   </head>
 
 <body>  
-    <div class="navbar">
+    <div class="overlay2">
         <nav class="navbar navbar-light d-flex justify-content-start">   
           
           <select name="sel-country" id="selCountry"></select>
           <button type="button" id="btnRun" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <img src="./img/info.png" />
           </button>
-          <a href="./index.html">
-          <button type="button" id="btnReset" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <img src="./img/reset.png" />
-          </button>
-          </a>
+          
           <button type="button" id="btnHelp" data-bs-toggle="modal" data-bs-target="#exampleModal2">
             <img src="./img/help.png" />
           </button>
@@ -50,10 +46,10 @@
             <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
             <a class="nav-link" id="nav-generalInfo-tab" data-bs-toggle="tab" href="#nav-generalInfo" role="tab" aria-controls="nav-generalInfo" aria-selected="false">General Info</a>
     
-            <a class="nav-link" id="nav-weather-tab" data-bs-toggle="tab" href="#nav-weather" role="tab" aria-controls="nav-weather" aria-selected="false">Weather</a>
+            <a class="nav-link" id="nav-weather-tab" data-bs-toggle="tab" href="#nav-weather" role="tab" aria-controls="nav-weather" aria-selected="false">Capital Info</a>
             <a class="nav-link" id="nav-currency-tab" data-bs-toggle="tab" href="#nav-currency" role="tab" aria-controls="nav-currency" aria-selected="false">Currency</a>
             <a class="nav-link" id="nav-covid-tab" data-bs-toggle="tab" href="#nav-covid" role="tab" aria-controls="nav-covid" aria-selected="false">Covid Info</a>       
-            <a class="nav-link" id="nav-wikiPlaces-tab" data-bs-toggle="tab" href="#nav-wikiPlaces" role="tab" aria-controls="nav-wikiPlaces" aria-selected="false">Places of Interest</a>
+            <!--<a class="nav-link" id="nav-wikiPlaces-tab" data-bs-toggle="tab" href="#nav-wikiPlaces" role="tab" aria-controls="nav-wikiPlaces" aria-selected="false">Places of Interest</a>-->
             <a class="nav-link" id="nav-news-tab" data-bs-toggle="tab" href="#nav-news" role="tab" aria-controls="nav-news" aria-selected="false">News</a>
     
           </div>
@@ -76,6 +72,7 @@
           </div>
   
           <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
+            <h4 id="txtHeadlineTitle">Weather</h4>
             <!-- <span id="txtCapital2"></span> -->
             <span id="txtCapitalWeatherCurrent"></span>
             <span id="txtCapitalWeatherHi"></span>
@@ -84,12 +81,18 @@
             <span id="txtCapitalWeatherForcast"></span>
             <span id="txtCapitalWeatherFHi"></span>
             <span id="txtCapitalWeatherFLo"></span>
+            <br>
+            <h4 id="txtHeadlineTitle">Interesting Places</h4>
+            <div id="wikiPlaces"></div>
+
           </div>
+
           <div class="tab-pane fade" id="nav-currency" role="tabpanel" aria-labelledby="nav-currency-tab">
             <span id="txtCurrency"></span>
             <span id="txtCurrencyCode"></span>
             <span id="txtRate"></span>
           </div>
+
           <div class="tab-pane fade" id="nav-covid" role="tabpanel" aria-labelledby="nav-covid-tab">
             <span id=txtCovidDeaths></span>
             <span id=txtCovidCases></span>
@@ -97,12 +100,13 @@
             <span id=txtCovidCritical></span>
             <span id=txtCovidDeathRate></span>
           </div>
-          
+          <!--
           <div class="tab-pane fade" id="nav-wikiPlaces" role="tabpanel" aria-labelledby="nav-wikiPlaces-tab">
             <div id="wikiPlaces"></div>
           </div>
+        -->
           <div class="tab-pane fade" id="nav-news" role="tabpanel" aria-labelledby="nav-news-tab">
-            <h2 id="txtHeadlineTitle">Top Headlines</h2><br>
+            <h4 id="txtHeadlineTitle">Top Headlines</h4><br>
             <h6 id="noNews"></h6>
             <div id="newsList"></div>
           </div>
@@ -135,7 +139,7 @@
           <p><img src="./img/eq.png"> Map last week's earthquakes</p>
           <p><img src="./img/track.png"> Track the International Spacial Station</p>
           <p><img src="./img/lista.png"> Display a list of visited countries</p>
-          <p><img src="./img/reset.png"> Reset app to initial state</p>
+          
 
         </div>
         

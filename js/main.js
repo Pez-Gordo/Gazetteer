@@ -268,7 +268,7 @@ $('#btnRun').click(function() {
                       if (result.status.name == "ok") {
                         $('#txtCapital').html('Capital: <strong>'+result.data[0].capital+ '</strong><br>');
                         //$('#txtCapital2').html('<strong>' + result.data[0].capital+ '\'\s Weather</strong><br>');
-                        $('#txtAreaInSqKm').html('Area in Sq Km: <strong>'+result.data[0].areaInSqKm+ '</strong><br>');
+                        $('#txtAreaInSqKm').html('Area: <strong>'+result.data[0].areaInSqKm+ '</strong> km²<br>');
                         $('#txtContinent').html('Continent: <strong>'+result.data[0].continent+ '</strong><br>');
                         $('#txtPopulation').html('Population: <strong>'+result.data[0].population+ '</strong><br>');
                         $('#txtLanguages').html('Languages: <strong>'+ result.data[0].languages + '</strong><br>');
@@ -406,8 +406,7 @@ $('#btnRun').click(function() {
                                   $('#wikiPlaces').html("");
                                   if (result.status.name == "ok") {
                                       for (var i=0; i<result.wikiPlaces.length; i++) {
-                                          $("#wikiPlaces").append('<li><a href=https://'+result.wikiPlaces[i].wikipediaUrl+'>'+ result.wikiPlaces[i].title +'</a></li>'+
-                                          result.wikiPlaces[i].summary + '<br>' 
+                                          $("#wikiPlaces").append('<li><a href=https://'+result.wikiPlaces[i].wikipediaUrl+'>'+ result.wikiPlaces[i].title +'</a></li>' 
                                           )}
                                           }
                               
@@ -551,8 +550,7 @@ $(window).keypress(function (e) {
         else {
             tracker = false;
         }
-        //console.log("You pressed T!");
-        //alert("You pressed W!");
+        
     }
 })
 
@@ -625,27 +623,3 @@ L.easyButton('<img src="./img/lista.png">', function(btn, map){
     countriesPopup.setLatLng(map.getCenter()).openOn(map);
 }).addTo(map);
 
-
-// añadir una escala al mapa
-L.control.scale({
-    metric: true,
-    imperial: false,
-    position: 'bottomleft'
-}).addTo(map)
-
-// adding logo watermark
-L.Control.Watermark = L.Control.extend({
-    onAdd: function(map){
-        var img = L.DomUtil.create('img')
-        img.src = './img/itcslogo.png'
-        img.style.width = '120px'
-        return img
-    },
-    onRemove: function(map){},
-})
-
-L.control.watermark = function(opts){
-    return new L.Control.Watermark(opts)
-}
-
-L.control.watermark({position: 'bottomleft'}).addTo(map)
